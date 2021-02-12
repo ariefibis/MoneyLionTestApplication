@@ -27,6 +27,17 @@ namespace MoneyLionTestApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Session Management Code start
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            //Session Management Code ends 
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -57,6 +68,15 @@ namespace MoneyLionTestApplication
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Xss-Protection", "1"); //X-XSS-Protection Mode : X-XSS-Protection: 1; mode=block
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN"); //ClickJacking Protection
+                await next();
+            });
 
             app.UseEndpoints(endpoints =>
             {
