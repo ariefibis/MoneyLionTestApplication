@@ -23,6 +23,7 @@ namespace MoneyLionTestApplication.Data
             : base(options)
         {
             _options = options;
+            //Encryption Key and Initialization Vector
             this._provider = new AesProvider(_encryptionKey, this._encryptionIV);
         }
 

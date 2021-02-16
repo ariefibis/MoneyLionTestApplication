@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MoneyLionTestApplication.Data;
+using MoneyLionTestApplication.Models;
 
 [assembly: HostingStartup(typeof(MoneyLionTestApplication.Areas.Identity.IdentityHostingStartup))]
 namespace MoneyLionTestApplication.Areas.Identity
@@ -15,6 +16,9 @@ namespace MoneyLionTestApplication.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                services.AddIdentityCore<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultUI();
             });
         }
     }
