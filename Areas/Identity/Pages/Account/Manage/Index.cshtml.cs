@@ -35,16 +35,16 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
         {
             [DataType(DataType.Date)]
             [Display(Name = "Date Of Birth")]
+            [Encrypted] //Uses AES Encryption while storing this data in database and decrypts when reading the DbSet<T> of DbContext
             public string DOB { get; set; }
 
             [Display(Name = "Name")]
-            [RegularExpression(@"^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u", ErrorMessage = "Inavlid Name Format")]
-            [PersonalData]
+            [RegularExpression(@"^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$", ErrorMessage = "Invalid Name Format")]
             public string Name { get; set; }
 
-            [Display(Name = "SSN Number")]
-            [RegularExpression(@" ^\d{3}-\d{2}-\d{4}$", ErrorMessage = "Invalid SSN Format")]
-            [PersonalData]
+            [Display(Name = "SSN Number (XXX-XX-XXXX)")]
+            [RegularExpression(@"^\d{3}-\d{2}-\d{4}$", ErrorMessage = "Invalid SSN Format")]
+            [Encrypted] //Uses AES Encryption while storing this data in database and decrypts when reading the DbSet<T> of DbContext
             public string SSN { get; set; }
         }
 
