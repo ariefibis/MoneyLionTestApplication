@@ -33,7 +33,6 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [DataType(DataType.Date)]
             [Display(Name = "Date Of Birth")]
             [Encrypted] //Uses AES Encryption while storing this data in database and decrypts when reading the DbSet<T> of DbContext
             public string DOB { get; set; }
@@ -51,17 +50,16 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var dob = await _userManager.GetPhoneNumberAsync(user);
-            var name = await _userManager.GetPhoneNumberAsync(user);
-            var ssn = await _userManager.GetPhoneNumberAsync(user);
+            
+        
 
             Username = userName;
 
             Input = new InputModel
             {
-                DOB = dob,
-                Name =name,
-                SSN = ssn
+                DOB = user.DOB,
+                Name =user.Name,
+                SSN = user.SSN
             };
         }
 
@@ -91,16 +89,33 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.DOB != phoneNumber)
+            //var dob = await _userManager.GetPhoneNumberAsync(user);
+            //if (Input.DOB != dob)
+            //{
+            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.DOB);
+            //    if (!setPhoneResult.Succeeded)
+            //    {
+            //        StatusMessage = "Unexpected error when trying to set phone number.";
+            //        return RedirectToPage();
+            //    }
+            //}
+
+            if(Input.DOB != user.DOB)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.DOB);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                user.DOB = Input.DOB;
             }
+
+            if (Input.Name != user.Name)
+            {
+                user.Name = Input.Name;
+            }
+
+            if (Input.SSN != user.SSN)
+            {
+                user.SSN = Input.SSN;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

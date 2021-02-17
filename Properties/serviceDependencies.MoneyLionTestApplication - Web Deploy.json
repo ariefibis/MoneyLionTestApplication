@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql.onprem",
-      "connectionId": "DefaultConnection",
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/moneyliontestapplicationdbserver/databases/MoneyLionTestApplication_db",
+      "type": "mssql.azure",
+      "connectionId": "MoneyLionTest",
       "secretStore": "AzureAppSettings"
     }
   }

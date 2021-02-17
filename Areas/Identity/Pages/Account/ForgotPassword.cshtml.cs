@@ -33,6 +33,7 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Encrypted]
             public string Email { get; set; }
         }
 

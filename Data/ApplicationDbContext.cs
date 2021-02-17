@@ -22,16 +22,15 @@ namespace MoneyLionTestApplication.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            _options = options;
             //Encryption Key and Initialization Vector
             this._provider = new AesProvider(_encryptionKey, this._encryptionIV);
+            _options = options;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.UseEncryption(this._provider);
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
