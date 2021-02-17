@@ -13,8 +13,8 @@ namespace MoneyLionTestApplication.Data
     {
         // Get key and IV from a Base64String or any other ways.
         // You can generate a key and IV using "AesProvider.GenerateKey()"
-        private readonly byte[] _encryptionKey = Encoding.ASCII.GetBytes("VEO9q9TMCCIWoWx9tCVmiw");
-        private readonly byte[] _encryptionIV = Encoding.ASCII.GetBytes("rHAjEvYOYcXNhgjlOGaVng");
+        private readonly byte[] _encryptionKey = Encoding.UTF8.GetBytes("VEO9q9TMCCIWoWx9tCVmiw");
+        private readonly byte[] _encryptionIV = Encoding.UTF8.GetBytes("rHAjEvYOYcXNhgjlOGaVng");
         private readonly IEncryptionProvider _provider;
         private readonly DbContextOptions _options;
 

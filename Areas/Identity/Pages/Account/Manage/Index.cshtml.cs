@@ -34,7 +34,6 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Display(Name = "Date Of Birth")]
-            [Encrypted] //Uses AES Encryption while storing this data in database and decrypts when reading the DbSet<T> of DbContext
             public string DOB { get; set; }
 
             [Display(Name = "Name")]
@@ -51,8 +50,6 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             
-        
-
             Username = userName;
 
             Input = new InputModel
@@ -88,17 +85,6 @@ namespace MoneyLionTestApplication.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-
-            //var dob = await _userManager.GetPhoneNumberAsync(user);
-            //if (Input.DOB != dob)
-            //{
-            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.DOB);
-            //    if (!setPhoneResult.Succeeded)
-            //    {
-            //        StatusMessage = "Unexpected error when trying to set phone number.";
-            //        return RedirectToPage();
-            //    }
-            //}
 
             if(Input.DOB != user.DOB)
             {
